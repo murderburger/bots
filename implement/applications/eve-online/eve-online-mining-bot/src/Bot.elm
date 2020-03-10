@@ -1,8 +1,6 @@
 {- Michaels EVE Online mining bot version 2020-03-10
-
    The bot warps to an asteroid belt, mines there until the ore hold is full, and then docks at a station to unload the ore. It then repeats this cycle until you stop it.
    It remembers the station in which it was last docked, and docks again at the same station.
-
    Setup instructions for the EVE Online client:
    + Set the UI language to English.
    + In Overview window, make asteroids visible.
@@ -43,7 +41,7 @@ import EveOnline.VolatileHostInterface as VolatileHostInterface exposing (MouseB
 
 runAwayShieldHitpointsThresholdPercent : Int
 runAwayShieldHitpointsThresholdPercent =
-    50
+    98
 
 
 type alias UIElement =
@@ -232,7 +230,7 @@ decideNextActionAcquireLockedTarget parsedUserInterface =
         Just asteroidInOverview ->
             case asteroidInOverview.distanceInMeters of
                 Ok asteroidDistanceInMeters ->
-                    if asteroidDistanceInMeters < 1000 then
+                    if asteroidDistanceInMeters < 14000 then
                         DescribeBranch "Asteroid is in range. Lock target."
                             (EndDecisionPath
                                 (Act
@@ -321,9 +319,9 @@ warpToMiningSite parsedUserInterface =
                     >> Maybe.andThen (menuEntryContainingTextIgnoringCase "Warp to Within")
                     >> Maybe.map (.uiNode >> clickOnUIElement MouseButtonLeft)
               )
-            , ( "Click menu entry 'Within 0 m'"
+            , ( "Click menu entry 'Within 20 km'"
               , lastContextMenuOrSubmenu
-                    >> Maybe.andThen (menuEntryContainingTextIgnoringCase "Within 0 m")
+                    >> Maybe.andThen (menuEntryContainingTextIgnoringCase "Within 20 km")
                     >> Maybe.map (.uiNode >> clickOnUIElement MouseButtonLeft)
               )
             ]
