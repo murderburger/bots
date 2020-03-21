@@ -230,7 +230,7 @@ decideNextActionAcquireLockedTarget parsedUserInterface =
         Just asteroidInOverview ->
             case asteroidInOverview.distanceInMeters of
                 Ok asteroidDistanceInMeters ->
-                    if asteroidDistanceInMeters < 14000 then
+                    if asteroidDistanceInMeters < 8000 then
                         DescribeBranch "Asteroid is in range. Lock target."
                             (EndDecisionPath
                                 (Act
